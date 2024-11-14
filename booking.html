@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Add background image to the page */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('assets/cartoon.avif'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Style the form container */
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5); /* More transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style form labels and inputs */
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-container input[type="text"], 
+        .form-container input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        .form-container input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Style the submit button */
+        .form-container button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .form-container button:active {
+            transform: translateY(2px);
+        }
+
+        /* Style the form header */
+        .form-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script type="text/javascript"> 
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form from submitting immediately
+            
+            // Perform all validations together
+            if (!missing_fields() || !email_validation() || !phone_validation()) {
+                return false; // Stop the form submission if validation fails
+            }
+
+            // If all validations pass, submit the form
+            alert('Form submitted successfully!');
+            document.getElementById('bookingForm').submit();  // You can add your form submission logic here
+        }
+
+        function email_validation() {
+            var email = document.getElementById("email").value;
+            var atposition = email.indexOf("@");
+            let atCount = email.split('@').length - 1;
+
+            if (atposition < 1 || atCount > 1) {
+                alert("Please enter a valid e-mail address");
+                return false;
+            }
+
+            var domainPart = email.substring(atposition + 1);
+
+            var dotPositions = domainPart.split(".");
+            for (var i = 1; i < dotPositions.length; i++) {
+                if (dotPositions[i].length < 2) {
+                    alert("Please enter a valid email Id");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function phone_validation() {
+            var phone = document.getElementById("phone").value;
+            var guardian_phone = document.getElementById("guardianPhone").value;
+
+            if (phone.length != 10 || isNaN(phone)) {
+                alert("Please enter a valid 10-digit phone number");
+                return false;
+            }
+            if (guardian_phone.length != 10 || isNaN(guardian_phone)) {
+                alert("Please enter a valid 10-digit Guardian's Phone Number");
+                return false;
+            }
+            return true;
+        }
+
+        function missing_fields() {
+            const missingFields = [];
+            
+            var name = document.getElementById("name").value;
+            var phone = document.getElementById("phone").value;
+            var email = document.getElementById("email").value;
+            var address = document.getElementById("address").value;
+            var guardian_Name = document.getElementById("guardianName").value;
+            var guardian_phone = document.getElementById("guardianPhone").value;
+
+            if (!name) {
+                missingFields.push('Full Name');
+            }
+            if (!phone) {
+                missingFields.push('Phone Number');
+            }
+            if (!email) {
+                missingFields.push('Email Address');
+            }
+            if (!address) {
+                missingFields.push('Address');
+            }
+            if (!guardian_Name) {
+                missingFields.push("Guardian's Name");
+            }
+            if (!guardian_phone) {
+                missingFields.push("Guardian's Phone Number");
+            }
+
+            if (missingFields.length > 0) {
+                alert('Please fill out the following fields: ' + missingFields.join(', '));
+                return false;  // Return false to prevent form submission
+            }
+
+            return true;  // Return true if all fields are valid
+        }
+    </script>  
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</head>
+<body>
+
+    <!-- Form container -->
+    <div class="form-container">
+        <div class="form-header">Book Your Stay</div>
+
+        <!-- Booking form -->
+        <form id="bookingForm" onsubmit="validateForm(event)">
+            <input type="hidden" name="hostelId" value="123">
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="fullName">
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phoneNumber">
+
+            <label for="email">Email Address:</label>
+            <input type="text" id="email" name="emailAddress">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+
+            <label for="guardianName">Guardian's Name:</label>
+            <input type="text" id="guardianName" name="guardianName">
+
+            <label for="guardianPhone">Guardian's Phone Number:</label>
+            <input type="text" id="guardianPhone" name="guardianPhoneNumber">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    // Perform all validations together
+    if (!missing_fields() || !email_validation() || !phone_validation()) {
+        return false; // Stop if validation fails
+    }
+
+    // If all validations pass, send the form data via AJAX
+    const formData = {
+    fullName: document.getElementById("name").value,
+    phoneNumber: document.getElementById("phone").value,
+    emailAddress: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    guardianName: document.getElementById("guardianName").value,
+    guardianPhoneNumber: document.getElementById("guardianPhone").value
+};
+
+    $.ajax({
+        url: 'http://localhost:3000/book', // Ensure this matches your server URL
+        type: 'POST',
+        data: JSON.stringify(formData),
+        contentType: 'application/json',
+        success: function(response) {
+            alert('Booking successful!');
+            console.log('Booking response:', response);
+            // Clear form or redirect user as needed
+        },
+        error: function(error) {
+            alert('An error occurred while booking. Please try again.');
+            console.error('Booking error:', error);
+        }
+    });
+}
+
+    </script>
+
+</body>
+</html>

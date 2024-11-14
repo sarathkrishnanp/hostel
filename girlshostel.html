@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls' Hostels</title>
+    <link rel="stylesheet" href="css/background.css"> <!-- Link to your main CSS file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap CSS -->
+</head>
+<body>
+
+ <!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid d-flex align-items-center">
+        <a class="navbar-brand d-flex align-items-center" href="index.html"> <!-- Updated the href to point to homepage -->
+            <img class="rounded-circle" style="width: 30px; height: 30px" src="Assets/cucek1.jpg" alt="Logo">
+            <span class="fs-4 fw-bold text-light ms-2">CUCEK HOSTELS</span>
+        </a>
+    </div>
+</nav>
+
+
+    <!-- Filter Section -->
+    <div class="container my-4" id="filterSection">
+        <h4>Filter</h4>
+        <form id="filterForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="distance">Distance:</label>
+                    <select id="distance" class="form-select">
+                        <option value="">Select Distance</option>
+                        <option value="below500">Below 500m</option>
+                        <option value="500to1km">Between 500m to 1km</option>
+                        <option value="above1km">Above 1km</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="price">Price:</label>
+                    <select id="price" class="form-select">
+                        <option value="">Select Price Range</option>
+                        <option value="below5000">Below 5000</option>
+                        <option value="above5000">Above 5000</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary my-2">Apply Filters</button>
+        </form>
+    </div>
+
+    <!-- Girls Hostels Section -->
+    <div class="container" id="hostelfacility">
+        <h2 class="fw-bold text-center my-4" id="girlsHostels">Girls Hostels</h2>
+        <div class="row" id="hostelList">
+            <!-- Babus Girls Hostel -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="60" data-price="5000">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/Babus home stay 1.jpg" class="card-img-top" alt="Babus Home Stay" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Babus Home Stay</b></h5><br><br>
+                        <a href="babus.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arikkudy Hostel -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="750" data-price="5000">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                         <img src="Assets/arrikudyg2.jpg" class="card-img-top" alt="Arikkudy Girls Hostel" style="object-fit: cover; width: 100%; height: 200px;"> 
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Arikkudy Girls Hostel</b></h5><br><br>
+                        <a href="arikkudygirls.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manalayi Girls Hostel -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="500" data-price="4500">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                         <img src="Assets/Manalayil girls 1.jpg" class="card-img-top" alt="Manalayi Girls Hostel" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Manalayi Girls Hostel</b></h5><br><br>
+                        <a href="manalayi.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SH Girls Hostel -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="750" data-price="4750">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/SH hostel 1.jpg" class="card-img-top" alt="SH Hostel" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>SH Hostel</b></h5><br><br>
+                        <a href="sh.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anju Home Stay -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="150" data-price="5200">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/Anju home stay 1.jpg" class="card-img-top" alt="Anju Home Stay" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Anju Home Stay</b></h5><br><br>
+                        <a href="anju.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Radha Madhavam Hostel -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="150" data-price="7000">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/Radha madhavam 1.jpg" class="card-img-top" alt="Radha Madhavam Hostel" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Radha Madhavam Hostel</b></h5><br><br>
+                        <a href="radhamadavam.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SS Home Stay -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="40" data-price="5000">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/SS home stay 1.jpg" class="card-img-top" alt="SS Home Stay" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>SS Home Stay</b></h5><br><br>
+                        <a href="ss.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sarang Home Stay -->
+            <div class="col-lg-3 text-center h-100 hostel-item" data-distance="750" data-price="2000">
+                <div class="card mb-4">
+                    <div style="position: relative; overflow: hidden;">
+                        <img src="Assets/Sarang hostel 1.jpg" class="card-img-top" alt="SS Home Stay" style="object-fit: cover; width: 100%; height: 200px;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Sarang Hostel</b></h5><br><br>
+                        <a href="sarang.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center my-4">
+        <a href="index.html" class="btn btn-primary">Back </a>
+    </div>
+
+    <script>
+        document.getElementById('filterForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get selected filter values
+            const selectedDistance = document.getElementById('distance').value;
+            const selectedPrice = document.getElementById('price').value;
+
+            // Filter hostel items
+            const hostelItems = document.querySelectorAll('.hostel-item');
+            hostelItems.forEach(function(item) {
+                const itemDistance = parseInt(item.getAttribute('data-distance'));
+                const itemPrice = parseInt(item.getAttribute('data-price'));
+
+                // Apply distance filter
+                let distanceMatches = true;
+                if (selectedDistance === 'below500' && itemDistance >= 500) {
+                    distanceMatches = false;
+                } else if (selectedDistance === '500to1km' && (itemDistance < 500 || itemDistance > 1000)) {
+                    distanceMatches = false;
+                } else if (selectedDistance === 'above1km' && itemDistance <= 1000) {
+                    distanceMatches = false;
+                }
+
+                // Apply price filter
+                let priceMatches = true;
+                if (selectedPrice === 'below5000' && itemPrice >= 5000) {
+                    priceMatches = false;
+                } else if (selectedPrice === 'above5000' && itemPrice < 5000) {
+                    priceMatches = false;
+                }
+
+                // Show or hide the hostel item based on filters
+                if (distanceMatches && priceMatches) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // When the user navigates to a subfolder (hostel page), add a state to the history
+        history.pushState(null, null, window.location.href);
+      </script>
+      
+
+    <div class="container-fluid p-0" style="background-color:rgba(0, 0, 0, 0.9); color:#FFF">
+        <div style="text-align:center">
+            <center>
+                <p class="m-0 fs-5 text-white"> <strong>&copy;Cucek Engineering College</strong>. All Rights
+                    Reserved.<br />Designed &amp; Developed By: Sarath,Gopika,Anjali & Swetha (MCA 2023-25)
+                </p>
+            </center>
+        </div>
+    </div>
+</body>
+</html>

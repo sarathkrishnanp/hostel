@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRS Boys Hostel</title>
+    <link rel="stylesheet" href="css/background.css"> <!-- Link to your main CSS file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap CSS -->
+    <style>
+        body {
+            background-image: url('Assets/cucek1.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            padding-top: 60px;
+        }
+
+        .hostel-gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hostel-img-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hostel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .bullet-points {
+            font-size: 1.2rem;
+        }
+
+        .location-section {
+            padding: 20px;
+            background-color: rgba(246, 240, 240, 0.9);
+            color: black;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+
+        .modal-body img {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            display: block;
+        }
+        /* Center the button on the page */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh; /* Full viewport height */
+        }
+
+        /* Style the button */
+        .book-now-btn {
+            background-color: #4CAF50; /* Green background */
+            color: white;              /* White text */
+            padding: 15px 30px;        /* Padding for size */
+            font-size: 18px;           /* Font size */
+            border: none;              /* Remove border */
+            border-radius: 8px;        /* Rounded corners */
+            cursor: pointer;           /* Pointer cursor on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Animation for hover */
+        }
+
+        /* Hover effect */
+        .book-now-btn:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+            transform: translateY(-2px); /* Lift the button on hover */
+        }
+
+        /* Active (clicked) effect */
+        .book-now-btn:active {
+            transform: translateY(2px); /* Button pressed effect */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img class="rounded-circle" style="width: 30px; height: 30px" src="Assets/cucek1.jpg" alt="Logo">
+                <span class="fs-4 fw-bold text-light ms-2">CUCEK HOSTELS</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Overlay for the background -->
+    <div class="overlay"></div>
+
+    <div class="container my-4">
+        <h2 class="fw-bold text-center">LRS Boys Hostel</h2>
+
+        <!-- Image Gallery -->
+        <div class="hostel-gallery">
+            <!-- First image (clickable) -->
+            <div class="hostel-img-container">
+                <img src="Assets/LRS boys hostel.jpg" class="hostel-img" id="first-image" data-bs-toggle="modal" data-bs-target="#imageModal1">
+            </div>
+
+            <!-- Second image (clickable) -->
+            <div class="hostel-img-container">
+                <img src="Assets/LRS boys hostel 2.jpg" class="hostel-img" id="second-image" data-bs-toggle="modal" data-bs-target="#imageModal2">
+            </div>
+        </div>
+
+        <!-- "View More" Button to open the new page with more photos -->
+<div class="text-center mt-3">
+    <a href="lrs2.html" class="btn btn-light">View More</a>
+</div>
+
+        <!-- Rent and Distance Bullet Points -->
+        <ul class="bullet-points mt-3">
+            <li><strong>Rent:</strong> ₹1500 per month</li>
+            <li><strong>Distance:</strong> 1 kilometer from campus</li>
+        </ul>
+
+        <!-- Updated Description as Bullet Points -->
+        <ul class="bullet-points mt-3">
+            <li><strong>Accommodation:</strong> 9 rooms, accommodating 2 residents per room.</li>
+            <li><strong>Common Bathrooms:</strong> Well-maintained for all residents.</li>
+            <li><strong>Meals:</strong> Not provided, giving residents flexibility for meal options.</li>
+            <li><strong>Location:</strong> 1 kilometer from the college campus.</li>
+            <li><strong>Nearby Landmark:</strong> On the way to St. Mary’s Forane Church (Velyapalli).</li>
+            <li><strong>Comfort:</strong> Clean and budget-friendly living with essential amenities.</li>
+        </ul>
+        <div class="button-container">
+            <button class="book-now-btn" onclick="location.href='booking.html'">Book Now</button>
+        </div>
+
+        <!-- Location Section -->
+        <div class="location-section">
+           <center><h3>Location</h3></center>
+           <center>
+               <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3935.64797843392!2d76.43527817478612!3d9.452233890626973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b089d002178da47%3A0xb619222bd59800a8!2sLRS%20HOSTEL!5e0!3m2!1sen!2sin!4v1728729030271!5m2!1sen!2sin"
+                    width="90%" height="300px" style="border: 2px solid black;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+           </center>
+           <center>For more details <br><b>Contact: 8078523371</b></center>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center my-4">
+            <a href="boyshostel.html" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-3 bg-dark text-light">
+        <p>&copy; 2024 CUCEK Hostels. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap Modals for Image Pop-up -->
+    <!-- First Image Modal -->
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModalLabel1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img src="Assets/LRS boys hostel.jpg" class="img-fluid" alt="LRS Boys Hostel 1">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Image Modal -->
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModalLabel2" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img src="Assets/LRS boys hostel 2.jpg" class="img-fluid" alt="LRS Boys Hostel 2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

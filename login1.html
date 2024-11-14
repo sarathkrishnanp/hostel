@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kodinger">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Login Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/my-login.css">
+    <style>
+        /* Custom styles for the toggle switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toggle-label {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #f0f0f0;
+            font-weight: bold;
+            color: #666;
+        }
+        .toggle-label.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .toggle-radio {
+            display: none;
+        }
+        .toggle-label {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #ccc;
+            transition: background-color 0.4s ease;
+            margin: 0 5px;
+        }
+        .toggle-indicator {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            transition: transform 0.4s ease;
+            transform: translateY(-50%);
+        }
+        #admin:checked ~ .toggle-indicator {
+            transform: translate(80px, -50%);
+        }
+        #admin:checked + .toggle-label,
+        #user:checked + .toggle-label {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Center the login box */
+        .my-login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full height of the viewport */
+            background-image: url('assets/loginbg2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .card-wrapper {
+            max-width: 400px; /* Adjust the width as needed */
+            width: 100%;
+        }
+
+        /* Additional styling for the form card */
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+        }
+    </style>
+</head>
+
+<body class="my-login-page">
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="card-wrapper">
+                    <div class="brand">
+                        <!-- <img src="Assets/cucek1.jpg" alt="logo"> -->
+                    </div>
+                    <div class="card fat">
+                        <div class="card-body">
+                            <h4 class="card-title">Login</h4>
+
+                            <!-- Toggle buttons for User and Admin -->
+                            <div class="toggle-container">
+                                <input type="radio" name="role" id="user" value="user" class="toggle-radio" checked>
+                                <label class="toggle-label" for="user">User</label>
+                                <input type="radio" name="role" id="admin" value="admin" class="toggle-radio">
+                                <label class="toggle-label" for="admin">Admin</label>
+                                <div class="toggle-indicator"></div>
+                            </div>
+
+                            <!-- Form submission method set to POST -->
+                            <form method="POST" action="/login" class="my-login-validation">
+                                <div class="form-group">
+                                    <label for="email">E-Mail Address</label>
+                                    <input id="email" type="email" class="form-control" name="email"  autofocus>
+                                    <div class="invalid-feedback">Email is invalid</div>
+                                </div>
+
+                                <!-- Password field with show/hide functionality -->
+                                <div class="form-group">
+                                    <label for="password">Password
+                                        <a href="forgot.html" class="float-right">Forgot Password?</a>
+                                    </label>
+                                    <div class="input-group">
+                                        <input id="password" type="password" class="form-control" name="password" >
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" onclick="togglePasswordVisibility()">
+                                                <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback">Password is required</div>
+                                </div>
+
+                                <div class="form-group m-0">
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    Don't have an account? <a href="register.html">Create One</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.isAdmin) {
+                        window.location.href = "admin.html";  // Redirect to admin dashboard
+                    } else {
+                        window.location.href = "index.html";  // Redirect to user homepage
+                    }
+                } else {
+                    const errorData = await response.json();
+                    alert('Login failed: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An Error Occured');
+            }
+        });
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePasswordIcon');
+            passwordField.type = (passwordField.type === 'password') ? 'text' : 'password';
+            toggleIcon.classList.toggle('fa-eye-slash');
+        }
+
+        
+    </script>
+</body>
+</html>

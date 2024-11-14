@@ -1,0 +1,50 @@
+body{
+    background-image: url(/Assets/aeclogin.jpg);
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-y: auto;
+}
+/* Boys' Hostel Page Specific Styles */
+#boys-hostel-list-page {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#boys-hostel-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#boys-hostel-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#boys-hostel-list li {
+    font-size: 1.2em;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.card-img-top {
+    width: 100%; /* Ensure the image takes the full width of the card */
+    height: 200px; /* Set a fixed height for the images */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
+}
+

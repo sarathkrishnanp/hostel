@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kodinger">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Registration Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/my-login.css">
+    <style>
+        /* Custom CSS to position the toggle eye icon */
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .requirement {
+            color: red;
+        }
+
+        .requirement.valid {
+            color: green;
+        }
+
+        /* Center the login box */
+        .my-login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full height of the viewport */
+            background-image: url('assets/loginbg2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="my-login-page">
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-md-center h-100">
+                <div class="card-wrapper">
+                    <div class="card fat">
+                        <div class="card-body">
+                            <h4 class="card-title">Register</h4>
+                            <form id="registerForm" method="POST" class="my-login-validation" novalidate="">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input id="name" type="text" class="form-control" name="name" required autofocus>
+                                    <div class="invalid-feedback">
+                                        What's your name?
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">E-Mail Address</label>
+                                    <input id="email" type="email" class="form-control" name="email" required>
+                                    <div class="invalid-feedback">
+                                        Your email is invalid
+                                    </div>
+                                </div>
+
+                                <div class="form-group password-wrapper">
+                                    <label for="password">Password</label>
+                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    <i class="eye-icon" onclick="togglePasswordVisibility()">👁️</i>
+                                    <div class="invalid-feedback">
+                                        Password is required
+                                    </div>
+                                    <div id="passwordRequirements" class="password-requirements">
+                                        <p class="requirement" id="lengthRequirement">Minimum 8 characters</p>
+                                        <p class="requirement" id="uppercaseRequirement">At least one uppercase letter</p>
+                                        <p class="requirement" id="lowercaseRequirement">At least one lowercase letter</p>
+                                        <p class="requirement" id="digitRequirement">At least one digit</p>
+                                        <p class="requirement" id="specialCharRequirement">At least one special character</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group password-wrapper">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" required>
+                                    <i class="eye-icon" onclick="toggleConfirmPasswordVisibility()">👁️</i>
+                                    <div class="invalid-feedback">
+                                        Please confirm your password
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-checkbox custom-control">
+                                        <input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
+                                        <label for="agree" class="custom-control-label">I agree to the <a href="#">Terms and Conditions</a></label>
+                                        <div class="invalid-feedback">
+                                            You must agree with our Terms and Conditions
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group m-0">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Generate OTP
+                                    </button>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    Already have an account? <a href="login1.html">Login</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        Copyright &copy; 2023 &mdash; Your Company
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+        }
+
+        // Function to toggle confirm password visibility
+        function toggleConfirmPasswordVisibility() {
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            confirmPasswordField.type = confirmPasswordField.type === 'password' ? 'text' : 'password';
+        }
+
+        // Password validation requirements
+        const passwordRequirements = {
+            lengthRequirement: /[A-Za-z\d@$!%*?&]{8,}/,
+            uppercaseRequirement: /[A-Z]/,
+            lowercaseRequirement: /[a-z]/,
+            digitRequirement: /\d/,
+            specialCharRequirement: /[@$!%*?&]/
+        };
+
+        document.getElementById('password').addEventListener('input', function () {
+            const password = this.value;
+
+            for (const [id, regex] of Object.entries(passwordRequirements)) {
+                document.getElementById(id).classList.toggle('valid', regex.test(password));
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check required fields
+            if (!name || !email || !password) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            // Validate password format
+            if (!passwordRequirements.lengthRequirement.test(password) ||
+                !passwordRequirements.uppercaseRequirement.test(password) ||
+                !passwordRequirements.lowercaseRequirement.test(password) ||
+                !passwordRequirements.digitRequirement.test(password) ||
+                !passwordRequirements.specialCharRequirement.test(password)) {
+                alert('Password must meet all requirements.');
+                return;
+            }
+
+           
+        try {
+            // Register the user
+            const registerResponse = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const registerResult = await registerResponse.json();
+
+            if (registerResponse.ok) {
+                // OTP generation after registration success
+                const otpResponse = await fetch('http://localhost:3000/generate-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const otpResult = await otpResponse.json();
+
+                if (otpResponse.ok) {
+                    // Redirect to OTP verification page
+                    window.location.href = "otp.html";
+                } else {
+                    alert('OTP generation failed: ' + otpResult.message);
+                }
+            } else {
+                alert('Registration failed: ' + registerResult.message);
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again later.');
+            console.error(error);
+        }
+    });
+    </script>
+</body>
+</html>
