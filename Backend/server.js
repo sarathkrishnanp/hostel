@@ -32,7 +32,6 @@ const transporter = nodemailer.createTransport({
 
 app.post('/generate-otp', async (req, res) => {
     const { email } = req.body;
-
     // Generate a 6-digit OTP
     const otp = crypto.randomInt(100000, 999999).toString();
 
@@ -60,11 +59,9 @@ app.post('/generate-otp', async (req, res) => {
 
 app.post('/verify-otp', async (req, res) => {
     const { email, otp } = req.body;
-
     try {
         // Retrieve OTP record from the database based on email
-        const otpRecord = await OTPCollection.findOne({ email: email });
-        
+        const otpRecord = await OTP.findOne({ email: email , otp: otp })
         if (!otpRecord) {
             return res.status(400).json({ message: 'OTP not found for this email' });
         }
