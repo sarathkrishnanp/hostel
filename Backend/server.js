@@ -8,9 +8,16 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto'); // For OTP generation
 const OTP = require('./models/otp');
+const HostelOwner = require('./models/hostelowner'); // Import the HostelOwner model
+const HostelLogin = require('./models/hostellogin'); // Import the HostelLogin model
+
+const { v4: uuidv4 } = require('uuid');
+
+
 
 // Create an Express application
 const app = express();
+
 
 // Middleware
 app.use(cors());
@@ -29,6 +36,101 @@ const transporter = nodemailer.createTransport({
         pass: 'glggmrtkfbqgamqj'
     }
 });
+
+
+// Helper function to generate a short reference ID
+const generateReferenceId = () => {
+    return crypto.randomBytes(3).toString('hex'); // Generates a 6-character alphanumeric string
+};
+
+
+
+// Start server
+const PORT = 3001;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+// Serve static files (e.g., login1.html)
+app.use(express.static('public'));
+
+
+
+
+
+// Registration route for hostel owners
+app.post('/registerHostelOwner', async (req, res) => {
+    const { hostelName, ownerName, email, phone, password, rooms, rent } = req.body;
+
+    try {
+        // Check if the email already exists
+        const existingUser = await HostelOwner.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email is already registered.' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Generate a unique reference ID
+        const referenceId = generateReferenceId(); // Generates a 6-character reference ID
+
+        // Create a new hostel owner document
+        const newHostelOwner = new HostelOwner({
+            referenceId, // Store the generated reference ID
+            hostelName,
+            ownerName,
+            email,
+            phone,
+            password: hashedPassword,
+            rooms,
+            rent
+        });
+
+        // Save the new hostel owner to the database
+        await newHostelOwner.save();
+
+        // Send success response with a message
+        res.status(200).json({ message: 'Registration successful' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
+
+// POST route for hostel owner login
+app.post('/hostel-owner-login', async (req, res) => {
+    const { hostelName, email, referenceId, password } = req.body;
+
+    try {
+        // Find the hostel owner by email
+        const owner = await HostelLogin.findOne({ email });
+
+        if (!owner) {
+            return res.status(404).json({ message: 'Hostel owner not found' });
+        }
+
+        // Verify credentials
+        const isMatch = 
+            owner.hostelName === hostelName &&
+            owner.referenceId === referenceId &&
+            await bcrypt.compare(password, owner.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Successful login
+        res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 
 app.post('/generate-otp', async (req, res) => {
     const { email } = req.body;
@@ -133,47 +235,15 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Login route
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
 
-    console.log('Login attempt with data:', { email, password }); // Added log for login attempts
-
-    try {
-        // Check if the user is the admin
-        if (email === 'sharathnellaya@gmail.com' && password === 'Sarath@2001') {
-            // Login successful for admin
-            return res.status(200).json({ message: 'Login successful', user: 'Admin', isAdmin: true });
-        }
-
-        // For regular users, check against the database
-        const user = await User.findOne({ email });
-        if (!user) {
-            console.log('User not found:', email); // Log if user is not found
-            return res.status(400).json({ message: 'User not found' });
-        }
-
-        // Check if the password matches
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            console.log('Invalid credentials for user:', email); // Log for invalid credentials
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        // If login is successful for a regular user
-        res.status(200).json({ message: 'Login successful', user: user.name, isAdmin: false });
-    } catch (err) {
-        console.error('Error during login:', err);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
 
 // Handle booking form submission
 app.post('/book', async (req, res) => {
-    const { fullName, phoneNumber, emailAddress, address, guardianName, guardianPhoneNumber } = req.body;
+    const { hostelName, fullName, phoneNumber, emailAddress, address, guardianName, guardianPhoneNumber } = req.body;
 
     try {
         const newBooking = new Booking({
+            hostelName,  // Save the hostel name as part of the booking
             fullName,
             phoneNumber,
             emailAddress,

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hostel Owner Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('assets/loginbg2.jpg'); /* Updated background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.9); /* Matching the style from register.html */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-card h4 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .forgot-password {
+            text-align: left;
+            display: block;
+            width: 100%;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .invalid-feedback {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h4>Hostel Owner Login</h4>
+
+        <!-- Hostel Owner Login Form -->
+        <form id="hostelOwnerLoginForm">
+            <div class="form-group">
+                <label for="hostel-name">Hostel Name</label>
+                <input id="hostel-name" type="text" class="form-control" name="hostelName" required>
+                <div class="invalid-feedback">Hostel Name is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="hostel-email">Hostel Owner E-Mail Address</label>
+                <input id="hostel-email" type="email" class="form-control" name="email" required>
+                <div class="invalid-feedback">Email is invalid</div>
+            </div>
+
+            <div class="form-group">
+                <label for="reference-id">Reference ID</label>
+                <input id="reference-id" type="text" class="form-control" name="referenceId" required>
+                <div class="invalid-feedback">Reference ID is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="hostel-password">Password</label>
+                <input id="hostel-password" type="password" class="form-control" name="password" required>
+                <div class="invalid-feedback">Password is required</div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="forgot.html">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="hostelownerregister.html">Create One</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    
+    <script>
+        document.getElementById('hostelOwnerLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Gather the form data
+            const formData = {
+                hostelName: document.getElementById('hostel-name').value,
+                email: document.getElementById('hostel-email').value,
+                referenceId: document.getElementById('reference-id').value,
+                password: document.getElementById('hostel-password').value
+            };
+
+            // Make the POST request to the server
+            fetch('/hostel-owner-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    // Redirect to dashboard or homepage after successful login
+                    window.location.href = '/hostelowner.html'; // Modify with your actual dashboard URL
+                } else {
+                    // Handle login failure
+                    alert(data.message); // You can enhance this with a more user-friendly message
+                }
+            })
+            .catch(error => {
+                console.error('Error during login:', error);
+                alert('Something went wrong, please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Choose Your Role</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <style>
+        .role-selection-background {
+            background-image: url('https://via.placeholder.com/1500x1000');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .role-selection-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .role-selection-card h4 {
+            margin-bottom: 20px;
+        }
+
+        .role-selection-buttons button {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body class="role-selection-background">
+    <div class="role-selection-card">
+        <h4>Choose Your Role</h4>
+        
+        <div class="role-selection-buttons">
+            <!-- Buttons to choose the role -->
+            <button class="btn btn-primary" onclick="window.location.href='login1.html'">User login</button>
+            <button class="btn btn-secondary" onclick="window.location.href='hostelownerlogin.html'">Hostel Owner login</button>
+        </div>
+    </div>
+</body>
+</html>

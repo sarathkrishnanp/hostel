@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Owner Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('assets/loginbg2.jpg'); /* Background image from register.html */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .registration-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-form">
+        <h3 class="text-center">Hostel Owner Registration</h3>
+        <form id="registrationForm">
+            <!-- Hostel Name -->
+            <div class="form-group">
+                <label for="hostelName">Hostel Name</label>
+                <input type="text" id="hostelName" name="hostelName" class="form-control" placeholder="Enter your hostel name">
+            </div>
+
+            <!-- Owner Name -->
+            <div class="form-group">
+                <label for="ownerName">Hostel Owner Name</label>
+                <input type="text" id="ownerName" name="ownerName" class="form-control" placeholder="Enter your name">
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Enter your email">
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Create a password">
+            </div>
+
+            <!-- Number of Rooms -->
+            <div class="form-group">
+                <label for="rooms">Number of Rooms</label>
+                <input type="number" id="rooms" name="rooms" class="form-control" placeholder="Enter number of rooms">
+            </div>
+
+            <!-- Rent -->
+            <div class="form-group">
+                <label for="rent">Rent</label>
+                <input type="number" id="rent" name="rent" class="form-control" placeholder="Enter monthly rent (₹)">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+                <button id="submitButton" type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </form>
+
+        <!-- Link to Login Page -->
+        <div class="text-center">
+            Already have an account? <a href="login1.html">Login Here</a>
+        </div>
+    </div>
+
+    <script>
+        // Email validation
+        function email_validation() {
+            var email = document.getElementById("email").value;
+            var atposition = email.indexOf("@");
+            let atCount = email.split('@').length - 1;
+
+            if (atposition < 1 || atCount > 1) {
+                alert("Please enter a valid e-mail address");
+                return false;
+            }
+
+            var domainPart = email.substring(atposition + 1);
+
+            var dotPositions = domainPart.split(".");
+            for (var i = 1; i < dotPositions.length; i++) {
+                if (dotPositions[i].length < 2) {
+                    alert("Please enter a valid email Id");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Phone validation
+        function phone_validation() {
+            var phone = document.getElementById("phone").value;
+
+            if (phone.length != 10 || isNaN(phone)) {
+                alert("Please enter a valid 10-digit phone number");
+                return false;
+            }
+            return true;
+        }
+
+        // Check for missing fields
+        function missing_fields() {
+            const missingFields = [];
+            
+            var hostelName = document.getElementById("hostelName").value;
+            var ownerName = document.getElementById("ownerName").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var password = document.getElementById("password").value;
+            var rooms = document.getElementById("rooms").value;
+            var rent = document.getElementById("rent").value;
+
+            if (!hostelName) missingFields.push('Hostel Name');
+            if (!ownerName) missingFields.push('Owner Name');
+            if (!email) missingFields.push('Email Address');
+            if (!phone) missingFields.push('Phone Number');
+            if (!password) missingFields.push('Password');
+            if (!rooms) missingFields.push('Number of Rooms');
+            if (!rent) missingFields.push('Rent');
+
+            if (missingFields.length > 0) {
+                alert('Please fill out the following fields: ' + missingFields.join(', '));
+                return false; 
+            }
+
+            return true;
+        }
+
+        // Form submit event handler
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Perform all validations together
+            if (!missing_fields() || !email_validation() || !phone_validation()) {
+                return false; // Stop if validation fails
+            }
+
+            // Gather form data
+            const formData = {
+                hostelName: document.getElementById('hostelName').value,
+                ownerName: document.getElementById('ownerName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value,
+                rooms: document.getElementById('rooms').value,
+                rent: document.getElementById('rent').value
+            };
+
+            // Send data to the server using fetch
+            fetch('http://localhost:3001/registerHostelOwner', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())  // Parsing the response as JSON
+            .then(data => {
+                if (data.message === 'Registration successful') {
+                    // Redirect to the login page after successful registration
+                    window.location.href = '/hostelownerlogin.html';
+                } else {
+                    // Display error message
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error during registration:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>

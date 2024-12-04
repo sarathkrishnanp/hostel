@@ -1,8 +1,12 @@
-// booking.js
 const mongoose = require('mongoose');
 
 // Define the booking schema
 const bookingSchema = new mongoose.Schema({
+    hostelName: {
+        type: String,
+        required: true,
+        trim: true
+    },
     fullName: {
         type: String,
         required: true,
