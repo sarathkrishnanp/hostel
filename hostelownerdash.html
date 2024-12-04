@@ -63,7 +63,7 @@
     <div class="sidebar">
         <h2 class="text-center">Hostel Owner Dashboard</h2>
         <a href="#manage-hostels" onclick="showSection('manage-hostels'); loadHostels();">Manage Hostels</a>
-        <a href="#logout">Logout</a>
+        <a href="#logout" onclick="logout()">Logout</a>
     </div>
 
     <div class="content">
@@ -153,6 +153,15 @@
                     .catch(error => console.error('Error deleting hostel:', error));
             }
         }
+        function logout() {
+    // Clear any session-related data (if applicable)
+    // For example, you might clear tokens or user data from localStorage
+    // localStorage.removeItem('token'); // Example of clearing a token
+
+    // Redirect to the login page
+    window.location.href = 'hostelownerlogin.html';
+}
+
     </script>
 </body>
 </html>

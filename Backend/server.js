@@ -46,7 +46,7 @@ const generateReferenceId = () => {
 
 
 // Start server
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
@@ -203,6 +203,32 @@ app.get('/', (req, res) => {
 // Route for admin dashboard
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin', 'index.html')); // Adjust the path as needed
+});
+
+// Login Route
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Find the user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Check if the password matches
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (!isPasswordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Check for admin user (adjust as per your admin logic)
+        const isAdmin = (email === 'sharathnellaya@gmail.com' && password === 'Sarath@2001');
+        return res.status(200).json({ message: 'Login successful', isAdmin });
+    } catch (error) {
+        console.error('Error during login:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 // Registration route
@@ -423,8 +449,4 @@ app.put('/api/users/:id', async (req, res) => {
 
 
 
-// Start the server
-const port = 3000;
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
+

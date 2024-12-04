@@ -18,7 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
     <style>
 
-
  /* Remove the dropdown arrow */
 .nav-item .nav-link::after {
     display: none;
@@ -95,6 +94,75 @@
                 transform: translateY(calc(-100% + 1px));
             }
         }
+        
+        .search-container {
+            position: relative;
+            width: 100%; /* Full width of parent */
+            max-width: 500px; /* Maximum width of the search bar */
+            display: flex;
+            margin: 20px; /* Margins for spacing */
+        }
+
+        .search-bar {
+            display: flex;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            height: 35px;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            width: 100%; /* Full width of the input field */
+            box-sizing: border-box; /* Includes padding and border in width */
+        }
+
+        button {
+            padding: 8px 12px;
+            height: 35px;
+            background-color: white;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .search-icon {
+            margin-left: 5px;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestions div:hover,
+        .suggestions div.highlighted {
+            background-color:grey;
+        }    
     </style>
 </head>
 
@@ -117,31 +185,36 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand"><img class="rounded-circle" style="width: 30px; height: 30px"
-                src="Assets/cucek1.jpg" alt="Logo"></a>
-        <a class="fs-4 fw-bold text-light" href="#" style="text-decoration: none;">CUCEK HOSTELS</a>
+                src="Assets/cucek1.jpg"></a>
+        <a class="fs-4 fw-bold text-light" href="#" style="text-decoration: none;margin-right: auto;">CUCEK HOSTELS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <!-- Add this in the appropriate section, e.g., within <main> or a <div> -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for hostels..." autocomplete="off">
+                    <button id="searchButton">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                </div>
+                <div class="suggestions" id="suggestionsBox"></div>
+            </div> 
+
+
+
+
+
+
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Search Bar -->
-            <form class="d-flex ms-auto search-bar" role="search">
-                <input
-                    class="form-control"
-                    type="search"
-                    id="searchInput"
-                    placeholder="Search hostels..."
-                    oninput="filterHostels()"
-                >
-                <button class="btn btn-primary" type="button">Search</button>
-            </form>
-
-            <!-- Dropdown Menu -->
-            <ul class="navbar-nav ms-3">
+            <ul class="navbar-nav ms-auto">
+                <!-- Right Side Dropdown Button with Three Vertical Lines -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
+                        <!-- Three vertical lines (hamburger icon) -->
                         <div class="hamburger-icon">
                             <span></span>
                             <span></span>
@@ -150,6 +223,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#about">About Us</a></li>
+
+                        <!-- Dropdown for 'Our Hostels' -->
                         <li class="dropdown-submenu">
                             <a class="dropdown-item dropdown-toggle" href="#">Our Hostels</a>
                             <ul class="dropdown-menu">
@@ -157,6 +232,7 @@
                                 <li><a class="dropdown-item" href="girls-hostels.html">Girls Hostels</a></li>
                             </ul>
                         </li>
+
                         <li><a class="dropdown-item" href="#contact">Contact Us</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
@@ -166,8 +242,6 @@
         </div>
     </div>
 </nav>
-
-
 
 
 
@@ -503,7 +577,7 @@
                 document.head.appendChild(t);
             });
         </script>
-        
+
           <script>
             let token = localStorage.getItem("token");
 let user = document.getElementById("user");
@@ -541,10 +615,127 @@ logout.onclick = async () => {
     }, 100); // 100ms delay
 }
 
-          </script>
+</script>
+          <!--Search bar javascript code-->
+          <script>
+            const hostels = [
+                { name: "Nandanam Boys Hostel", link: "nandanam.html" },
+                { name: "MC Boys Hostel", link: "mc.html" },
+                { name: "Kairali Home Stay", link: "kairali.html" },
+                { name: "Shalom Boys Hostel", link: "shalom.html" },
+                { name: "Alfys Boys Hostel", link: "alfy.html" },
+                { name: "Pottumuppath Boys Hostel", link: "pott.html" },
+                { name: "Shyamala Boys Hostel", link: "shyamala.html" },
+                { name: "Arikkudy Boys Hostel", link: "arrikudyboys.html" },
+                { name: "Manalayil Boys Hostel", link: "manalayiboys.html" },
+                { name: "LRS Boys Hostel", link: "lrs.html" },
+                { name: "Babus Home Stay", link: "babus.html" },
+                { name: "Arikkudy Girls Hostel", link: "arikkudygirls.html" },
+                { name: "Manalayi Girls Hostel", link: "manalayi.html" },
+                { name: "Anju Home Stay", link: "anju.html" },
+                { name: "SH Hostel", link: "sh.html" },
+                { name: "Sarang Hostel", link: "sarang.html" },
+                { name: "SS Home Stay", link: "ss.html" },
+                { name: "Radha Madhavam Hostel", link: "radhamadavam.html" },
+            ];
+        
+            const searchInput = document.getElementById("searchInput");
+            const suggestionsBox = document.getElementById("suggestionsBox");
+            const searchButton = document.getElementById("searchButton");
+        
+            let highlightedIndex = -1; // To track the current highlighted suggestion
+        
+            const updateSuggestions = () => {
+                const query = searchInput.value.toLowerCase().trim();
+                suggestionsBox.innerHTML = "";
+                highlightedIndex = -1; // Reset the highlight
+        
+                if (query) {
+                    const filteredHostels = hostels.filter(h =>
+                        h.name.toLowerCase().includes(query)
+                    );
+        
+                    if (filteredHostels.length > 0) {
+                        filteredHostels.forEach((hostel, index) => {
+                            const suggestion = document.createElement("div");
+                            suggestion.textContent = hostel.name;
+                            suggestion.classList.add("suggestion");
+                            suggestion.addEventListener("click", () => {
+                                searchInput.value = hostel.name;
+                                navigateToHostel(); // Navigate directly when clicked
+                            });
+                            suggestionsBox.appendChild(suggestion);
+                        });
+                    } else {
+                        // Show no suggestions found message
+                        const noResult = document.createElement("div");
+                        noResult.textContent = "No results found.";
+                        noResult.classList.add("no-result");
+                        suggestionsBox.appendChild(noResult);
+                    }
+                }
+            };
+        
+            const clearHighlight = () => {
+                const suggestions = suggestionsBox.querySelectorAll(".suggestion");
+                suggestions.forEach(suggestion => suggestion.classList.remove("highlighted"));
+            };
+        
+            const navigateToHostel = () => {
+                let selectedHostel;
+        
+                const highlightedSuggestion = suggestionsBox.querySelector(".highlighted");
+                if (highlightedSuggestion) {
+                    selectedHostel = hostels.find(h => h.name === highlightedSuggestion.textContent);
+                    searchInput.value = highlightedSuggestion.textContent;
+                } else {
+                    selectedHostel = hostels.find(h => h.name.toLowerCase() === searchInput.value.toLowerCase());
+                }
+        
+                if (selectedHostel) {
+                    window.location.href = selectedHostel.link;
+                } else {
+                    alert("Hostel not found. Please select from the suggestions.");
+                }
+            };
+        
+            searchInput.addEventListener("input", updateSuggestions);
+        
+            searchInput.addEventListener("keydown", (event) => {
+                const suggestions = suggestionsBox.querySelectorAll(".suggestion");
+                if (event.key === "ArrowDown") {
+                    highlightedIndex = (highlightedIndex + 1) % suggestions.length;
+                    clearHighlight();
+                    suggestions[highlightedIndex]?.classList.add("highlighted");
+                } else if (event.key === "ArrowUp") {
+                    highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
+                    clearHighlight();
+                    suggestions[highlightedIndex]?.classList.add("highlighted");
+                } else if (event.key === "Enter") {
+                    event.preventDefault();
+                    navigateToHostel();
+                }
+            });
+        
+            searchButton.addEventListener("click", navigateToHostel);
+        
+            document.addEventListener("click", (e) => {
+                if (!e.target.closest(".search-container")) {
+                    suggestionsBox.innerHTML = ""; // Close suggestions when clicking outside
+                }
+            });
+             // Logout function
+        document.getElementById('logout').addEventListener('click', function () {
+            // Clear session storage or cookie if needed
+            sessionStorage.clear(); // If you're using sessionStorage for user login state
+            window.location.href = 'login1.html'; // Redirect to login page
+        });
+        </script>
+        
+        
+        
 
-
-
+        
         
             
        

@@ -8,7 +8,61 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/my-login.css">
     <style>
-        /* Custom styles for the login page */
+        /* Custom styles for the toggle switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toggle-label {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #f0f0f0;
+            font-weight: bold;
+            color: #666;
+        }
+        .toggle-label.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .toggle-radio {
+            display: none;
+        }
+        .toggle-label {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #ccc;
+            transition: background-color 0.4s ease;
+            margin: 0 5px;
+        }
+        .toggle-indicator {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            transition: transform 0.4s ease;
+            transform: translateY(-50%);
+        }
+        #admin:checked ~ .toggle-indicator {
+            transform: translate(80px, -50%);
+        }
+        #admin:checked + .toggle-label,
+        #user:checked + .toggle-label {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Center the login box */
         .my-login-page {
             display: flex;
             justify-content: center;
@@ -47,11 +101,20 @@
                         <div class="card-body">
                             <h4 class="card-title">Login</h4>
 
-                            <!-- Only User login now, removed admin toggle -->
+                            <!-- Toggle buttons for User and Admin -->
+                            <div class="toggle-container">
+                                <input type="radio" name="role" id="user" value="user" class="toggle-radio" checked>
+                                <label class="toggle-label" for="user">User</label>
+                                <input type="radio" name="role" id="admin" value="admin" class="toggle-radio">
+                                <label class="toggle-label" for="admin">Admin</label>
+                                <div class="toggle-indicator"></div>
+                            </div>
+
+                            <!-- Form submission method set to POST -->
                             <form method="POST" action="/login" class="my-login-validation">
                                 <div class="form-group">
                                     <label for="email">E-Mail Address</label>
-                                    <input id="email" type="email" class="form-control" name="email" autofocus>
+                                    <input id="email" type="email" class="form-control" name="email"  autofocus>
                                     <div class="invalid-feedback">Email is invalid</div>
                                 </div>
 
@@ -61,7 +124,7 @@
                                         <a href="forgot.html" class="float-right">Forgot Password?</a>
                                     </label>
                                     <div class="input-group">
-                                        <input id="password" type="password" class="form-control" name="password">
+                                        <input id="password" type="password" class="form-control" name="password" >
                                         <div class="input-group-append">
                                             <span class="input-group-text" onclick="togglePasswordVisibility()">
                                                 <i class="fa fa-eye" id="togglePasswordIcon"></i>
@@ -105,7 +168,11 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    window.location.href = "index.html";  // Redirect to user homepage
+                    if (data.isAdmin) {
+                        window.location.href = "admin.html";  // Redirect to admin dashboard
+                    } else {
+                        window.location.href = "index.html";  // Redirect to user homepage
+                    }
                 } else {
                     const errorData = await response.json();
                     alert('Login failed: ' + errorData.message);
@@ -122,6 +189,8 @@
             passwordField.type = (passwordField.type === 'password') ? 'text' : 'password';
             toggleIcon.classList.toggle('fa-eye-slash');
         }
+
+        
     </script>
 </body>
 </html>
