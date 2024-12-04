@@ -73,7 +73,8 @@
         <div id="manage-hostels" class="card" style="display:none;">
             <div class="card-body">
                 <h3>Manage Hostels</h3>
-                <button class="btn btn-primary mb-3" onclick="addHostel()">Add Hostel</button>
+                <div id="hostel-details"></div>
+                <!-- <button class="btn btn-primary mb-3" onclick="addHostel()">Add Hostel</button>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -86,7 +87,7 @@
                     <tbody id="hostel-list">
                         <!-- Hostel data will be dynamically loaded here -->
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
@@ -102,26 +103,9 @@
         async function loadHostels() {
             try {
                 const response = await fetch(`http://localhost:3000/api/hostel/${localStorage.getItem('refId')}`);
-                const hostels = await response.json();
-                const hostelList = document.getElementById('hostel-list');
-                hostelList.innerHTML = '';
-
-                hostels.forEach(hostel => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${hostel.name}</td>
-                        <td>
-                            <img src="${hostel.picture}" alt="${hostel.name}" style="width: 100px; height: auto;">
-                            <button class="btn btn-danger btn-sm" onclick="deletePicture('${hostel._id}')">Delete Picture</button>
-                        </td>
-                        <td>${hostel.details}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editHostel('${hostel._id}')">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteHostel('${hostel._id}')">Delete</button>
-                        </td>
-                    `;
-                    hostelList.appendChild(row);
-                });
+                const hostel = await response.json();
+                const hostelDetail = document.getElementById('hostel-details');
+                hostelDetail.innerHTML = `${hostel.hostelName}`
             } catch (error) {
                 console.error('Error loading hostels:', error);
             }
