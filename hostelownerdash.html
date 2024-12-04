@@ -101,7 +101,7 @@
 
         async function loadHostels() {
             try {
-                const response = await fetch('http://localhost:3000/api/hostels');
+                const response = await fetch(`http://localhost:3000/api/hostel/${localStorage.getItem('refId')}`);
                 const hostels = await response.json();
                 const hostelList = document.getElementById('hostel-list');
                 hostelList.innerHTML = '';

@@ -62,11 +62,6 @@
 
         <!-- Hostel Owner Login Form -->
         <form id="hostelOwnerLoginForm">
-            <div class="form-group">
-                <label for="hostel-name">Hostel Name</label>
-                <input id="hostel-name" type="text" class="form-control" name="hostelName" required>
-                <div class="invalid-feedback">Hostel Name is required</div>
-            </div>
 
             <div class="form-group">
                 <label for="hostel-email">Hostel Owner E-Mail Address</label>
@@ -105,17 +100,16 @@
     <script>
         document.getElementById('hostelOwnerLoginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
-
+            const referenceId =  document.getElementById('reference-id').value
             // Gather the form data
             const formData = {
-                hostelName: document.getElementById('hostel-name').value,
                 email: document.getElementById('hostel-email').value,
-                referenceId: document.getElementById('reference-id').value,
+                referenceId,
                 password: document.getElementById('hostel-password').value
             };
 
             // Make the POST request to the server
-            fetch('/hostel-owner-login', {
+            fetch('http://localhost:3000/hostel-owner-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -125,8 +119,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login successful') {
+                    localStorage.setItem('refId', referenceId)
                     // Redirect to dashboard or homepage after successful login
-                    window.location.href = '/hostelowner.html'; // Modify with your actual dashboard URL
+                    window.location.href = '/hostelownerdash.html'; // Modify with your actual dashboard URL
                 } else {
                     // Handle login failure
                     alert(data.message); // You can enhance this with a more user-friendly message

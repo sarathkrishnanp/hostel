@@ -103,11 +103,11 @@ app.post('/registerHostelOwner', async (req, res) => {
 
 // POST route for hostel owner login
 app.post('/hostel-owner-login', async (req, res) => {
-    const { hostelName, email, referenceId, password } = req.body;
-
+    const { email, referenceId, password } = req.body;
     try {
         // Find the hostel owner by email
-        const owner = await HostelLogin.findOne({ email });
+        const owner = await HostelOwner.findOne({email});
+
 
         if (!owner) {
             return res.status(404).json({ message: 'Hostel owner not found' });
@@ -115,10 +115,8 @@ app.post('/hostel-owner-login', async (req, res) => {
 
         // Verify credentials
         const isMatch = 
-            owner.hostelName === hostelName &&
             owner.referenceId === referenceId &&
             await bcrypt.compare(password, owner.password);
-
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
@@ -130,6 +128,21 @@ app.post('/hostel-owner-login', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+app.get('/api/hostel/:id', async (req, res) => {
+    try {
+        const referenceId = req.params.id
+        console.log(referenceId)
+        const hostelData = await HostelOwner.findOne({referenceId});
+        console.log(hostelData)
+        if (!hostelData) {
+            return res.status(404).json({ message: 'Hostel data not found' });
+        }
+        res.json(hostelData)
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+})
 
 
 app.post('/generate-otp', async (req, res) => {
